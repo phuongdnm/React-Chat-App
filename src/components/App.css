@@ -10,13 +10,13 @@ body,
 .messages {
   height: 440px;
   overflow-y: scroll;
+  padding-right: 10px;
 }
 
 /* MessageForm.js */
 .message__form {
   position: fix !important;
-  bottom: 1em;
-  margin-left: 320px !important;
+  bottom: 0.5em;
   left: 0;
   right: 1em;
   z-index: 200;

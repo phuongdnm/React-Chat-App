@@ -144,7 +144,7 @@ class MessageForm extends React.Component {
             fluid
             name="message"
             style={{ marginBotton: '0.7rem' }}
-            // label={<Button icon={'add'} />}
+            icon={<Button icon={"send"} />}
             autoComplete="off"
             labelPosition="left"
             placeholder="write your message"
@@ -155,7 +155,7 @@ class MessageForm extends React.Component {
             value={message}
           />
         </Form>
-        <Button.Group icon widths="2">
+        <Button.Group icon widths="2" style={{marginTop: '5px'}}>
           <Button
             color="orange"
             content="Add Reply"

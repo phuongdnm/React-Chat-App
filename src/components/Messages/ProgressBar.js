@@ -3,13 +3,13 @@ import { Progress } from 'semantic-ui-react';
 
 const ProgressBar = ({ uploadState, percentUploaded }) => {
   return (
-    uploadState && (
+    uploadState === 'uploading' && (
       <Progress
         className="progress__bar"
         percent={percentUploaded}
         progress
         indicating
-        size="small"
+        size="medium"
         inverted
         success
       />
