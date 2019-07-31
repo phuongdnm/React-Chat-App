@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Button, Input } from 'semantic-ui-react';
+import { Segment, Button, Input, Form } from 'semantic-ui-react';
 import firebase from '../../firebase';
 
 class MessageForm extends React.Component {
@@ -58,19 +58,22 @@ class MessageForm extends React.Component {
     const { errors, message, loading } = this.state;
     return (
       <Segment className="message__form">
-        <Input
-          fluid
-          name="message"
-          style={{ marginBotton: '0.7rem' }}
-          label={<Button icon={'add'} />}
-          labelPosition="left"
-          placeholder="write your message"
-          onChange={this.handleChange}
-          className={
-            errors.some(err => err.message.includes('message')) ? 'error' : ''
-          }
-          value={message}
-        />
+        <Form onSubmit={this.sendMessage}>
+          <Form.Input
+            fluid
+            name="message"
+            style={{ marginBotton: '0.7rem' }}
+            // label={<Button icon={'add'} />}
+            autoComplete="off"
+            labelPosition="left"
+            placeholder="write your message"
+            onChange={this.handleChange}
+            className={
+              errors.some(err => err.message.includes('message')) ? 'error' : ''
+            }
+            value={message}
+          />
+        </Form>
         <Button.Group icon widths="2">
           <Button
             color="orange"
