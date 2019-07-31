@@ -18,7 +18,7 @@ class SizePanel extends React.Component {
         <UserPanel currentUser={currentUser} />
         <br/>
         <Channels currentUser={currentUser}/>
-        <DirectMessages />
+        <DirectMessages currentUser={currentUser}/>
       </Menu >
     );
   }
