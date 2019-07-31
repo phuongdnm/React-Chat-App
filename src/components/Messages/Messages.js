@@ -21,10 +21,18 @@ class Messages extends React.Component {
       this.addListeners(channel.id);
     }
   }
+  
+  componentWillUnmount() {
+    this.removeListeners();
+  }
 
   addListeners = channelId => {
     this.addMessageListener(channelId);
   };
+
+  removeListeners = () => {
+    this.state.messagesRef.off();
+  }
 
   addMessageListener = channelId => {
     let loadedMessages = [];
