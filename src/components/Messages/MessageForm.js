@@ -135,7 +135,14 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    const { errors, message, loading, modal, uploadState, percentUploaded } = this.state;
+    const {
+      errors,
+      message,
+      loading,
+      modal,
+      uploadState,
+      percentUploaded
+    } = this.state;
 
     return (
       <Segment className="message__form">
@@ -144,7 +151,7 @@ class MessageForm extends React.Component {
             fluid
             name="message"
             style={{ marginBotton: '0.7rem' }}
-            icon={<Button icon={"send"} />}
+            icon={<Button icon={'send'} />}
             autoComplete="off"
             labelPosition="left"
             placeholder="write your message"
@@ -155,7 +162,7 @@ class MessageForm extends React.Component {
             value={message}
           />
         </Form>
-        <Button.Group icon widths="2" style={{marginTop: '5px'}}>
+        <Button.Group icon widths="2" style={{ marginTop: '5px' }}>
           <Button
             color="orange"
             content="Add Reply"
@@ -165,6 +172,7 @@ class MessageForm extends React.Component {
             disabled={loading}
           />
           <Button
+            disabled={uploadState === 'uploading'}
             color="teal"
             content="Upload Media"
             labelPosition="right"
@@ -177,7 +185,10 @@ class MessageForm extends React.Component {
           closeModal={this.closeModal}
           uploadFile={this.uploadFile}
         />
-        <ProgressBar uploadState={uploadState} percentUploaded={percentUploaded}/>
+        <ProgressBar
+          uploadState={uploadState}
+          percentUploaded={percentUploaded}
+        />
       </Segment>
     );
   }
