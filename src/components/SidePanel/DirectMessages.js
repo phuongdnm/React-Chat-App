@@ -100,7 +100,7 @@ class DireactMessages extends React.Component {
       <Menu.Menu className="menu">
         <Menu.Item>
           <span>
-            <Icon name="mail" /> DIRECT MESSAGES
+            <Icon name="mail" /> MESSAGES
           </span>{' '}
           ({users.length})
         </Menu.Item>
