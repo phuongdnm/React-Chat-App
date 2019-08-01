@@ -18,7 +18,7 @@ class MessagesHeader extends React.Component {
         {/*Channel title */}
         <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0 }}>
           <span>
-            {channelName}
+            {channelName} {' '}
             {!isPrivateChannel && (
               <Icon
                 name={isChannelStarred ? 'star' : 'star outline'}
