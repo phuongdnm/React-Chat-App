@@ -3,7 +3,7 @@ body,
 .app {
   height: 100vh;
   background: #eee;
-  padding: 1em;
+  padding: 3px;
 }
 
 /* SidePannel.js */
@@ -13,7 +13,7 @@ body,
 
 /* Messages.js */
 .messages {
-  height: 440px;
+  height: 62vh;
   overflow-y: scroll;
   padding-right: 10px;
 }
@@ -21,7 +21,7 @@ body,
 /* MessageForm.js */
 .message__form {
   position: fix !important;
-  bottom: 0.5em;
+  bottom: 0em;
   left: 0;
   right: 1em;
   z-index: 200;

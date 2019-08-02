@@ -56,8 +56,8 @@ class MetaPanel extends React.Component {
             onClick={this.setActiveIndex}
           >
             <Icon name="dropdown" />
-            <Icon name="info" />
-            Channel Details
+            <Icon name="info circle" />
+            Channel details
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 0}>
             {channel && channel.details}
@@ -69,8 +69,8 @@ class MetaPanel extends React.Component {
             onClick={this.setActiveIndex}
           >
             <Icon name="dropdown" />
-            <Icon name="user circle" />
-            Top Posters
+            <Icon name="paper plane" />
+            Most messages/posters
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 1}>
             <List>{userPosts && this.displayToPosters(userPosts)}</List>
@@ -83,7 +83,7 @@ class MetaPanel extends React.Component {
           >
             <Icon name="dropdown" />
             <Icon name="pencil alternate" />
-            Created By
+            Created by
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 2}>
             <Header as="h4">
