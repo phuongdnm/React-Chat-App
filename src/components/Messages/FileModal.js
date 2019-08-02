@@ -38,7 +38,7 @@ class FileModal extends React.Component {
     const { modal, closeModal } = this.props;
 
     return (
-      <Modal open={modal} onClose={closeModal}>
+      <Modal open={modal} onClose={closeModal} centered={false}>
         <Modal.Header>Select an Image File</Modal.Header>
         <Modal.Content>
           <Input
