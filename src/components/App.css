@@ -65,28 +65,24 @@ body,
 /* Typing.js */
 .user__typing {
   font-style: italic;
-  font-weight: bold;
-  margin-right: 3px;
+  color: grey;
 }
 
 .typing {
-  width: 5em;
   height: 2em;
   position: relative;
   padding: 10px;
-  margin-left: 5px;
-  background: #e6e6e6;
   border-radius: 20px;
 }
 
 .typing__dot {
   float: left;
-  width: 8px;
-  height: 8px;
-  margin: 0 4px;
-  background: #8d8c91;
+  width: 9px;
+  height: 9px;
+  margin: 0 2px;
+  background: #9E9EA1;
   border-radius: 50%;
-  opacity: 0;
+  opacity: 0.4;
   animation: loadingFade 1s infinite;
 }
 
