@@ -1,6 +1,6 @@
 import React from 'react';
 // prettier-ignore
-import { Grid, Header, Icon, Dropdown, Image, Modal, Input, Button } from 'semantic-ui-react';
+import { Grid, Header, Icon, Dropdown, Image, Modal, Input, Button, Label } from 'semantic-ui-react';
 
 import firebase from '../../firebase';
 import AvatarEditor from 'react-avatar-editor';
@@ -11,7 +11,14 @@ class UserPanel extends React.Component {
     modal: false,
     previewImage: '',
     croppedImage: '',
-    blob: ''
+    blob: '',
+    storageRef: firebase.storage().ref(),
+    userRef: firebase.auth().currentUser,
+    usersRef: firebase.database().ref('users'),
+    metadata: {
+      contentType: 'image/jpeg'
+    },
+    uploadCroppedImage: ''
   };
 
   componentDidMount() {
@@ -83,6 +90,44 @@ class UserPanel extends React.Component {
     }
   };
 
+  uploadCroppedImage = () => {
+    const { storageRef, userRef, blob, metadata } = this.state;
+    storageRef
+      .child(`avatars/user-${userRef.uid}`)
+      .put(blob, metadata)
+      .then(snap => {
+        snap.ref.getDownloadURL().then(downloadURL => {
+          this.setState({ uploadCroppedImage: downloadURL }, () => {
+            this.changeAvatar();
+          });
+        });
+      });
+  };
+
+  changeAvatar = () => {
+    this.state.userRef
+      .updateProfile({
+        photoURL: this.state.uploadCroppedImage
+      })
+      .then(() => {
+        console.log('PhotoURL updated!');
+        this.closeModal();
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    this.state.usersRef
+      .child(this.state.user.uid)
+      .update({ avatar: this.state.uploadCroppedImage })
+      .then(() => {
+        console.log('User avatar updated');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
   render() {
     const { user, modal, previewImage, croppedImage } = this.state;
     const { primaryColor } = this.props;
@@ -116,7 +161,11 @@ class UserPanel extends React.Component {
           </Header>
 
           {/* Change user avatar modal */}
-          <Modal open={modal} onClose={this.closeModal}>
+          <Modal
+            open={modal}
+            onClose={this.closeModal}
+            centered={false}
+          >
             <Modal.Header>Change avatar</Modal.Header>
             <Modal.Content>
               <Input
@@ -135,10 +184,11 @@ class UserPanel extends React.Component {
                       <AvatarEditor
                         ref={node => (this.avatarEditor = node)}
                         image={previewImage}
-                        width={120}
-                        height={120}
+                        width={250}
+                        height={250}
                         border={50}
                         scale={1.2}
+                        color={[255, 255, 255, 0.6]}
                       />
                     )}
                   </Grid.Column>
@@ -148,8 +198,8 @@ class UserPanel extends React.Component {
                     {croppedImage && (
                       <Image
                         style={{ margin: '3.5em auto' }}
-                        width={100}
-                        height={100}
+                        width={250}
+                        height={250}
                         src={croppedImage}
                       />
                     )}
@@ -159,12 +209,16 @@ class UserPanel extends React.Component {
             </Modal.Content>
             <Modal.Actions>
               {croppedImage && (
-                <Button color="green" inverted>
+                <Button
+                  color="green"
+                  inverted
+                  onClick={this.uploadCroppedImage}
+                >
                   <Icon name="save" /> Change Avatar
                 </Button>
               )}
               <Button color="orange" inverted onClick={this.handleCropImage}>
-                <Icon name="image" /> Preview/ Save preview
+                <Icon name="image" /> Preview | Save preview
               </Button>
               <Button color="red" inverted onClick={this.closeModal}>
                 <Icon name="remove" /> Cancel
