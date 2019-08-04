@@ -17,6 +17,7 @@ class MessageForm extends React.Component {
     uploadTask: null,
     storageRef: firebase.storage().ref(),
     percentUploaded: 0,
+    typingRef: firebase.database().ref('typing')
   };
 
   handleChange = e => {
@@ -42,7 +43,7 @@ class MessageForm extends React.Component {
 
   sendMessage = () => {
     const { getMessagesRef } = this.props;
-    const { message, channel } = this.state;
+    const { message, channel, typingRef, user } = this.state;
 
     if (message) {
       this.setState({ loading: true });
@@ -52,6 +53,10 @@ class MessageForm extends React.Component {
         .set(this.createMessage())
         .then(() => {
           this.setState({ loading: false, message: '', errors: [] });
+          typingRef
+            .child(channel.id)
+            .child(user.uid)
+            .remove();
         })
         .catch(err => {
           console.error(err);
@@ -142,6 +147,22 @@ class MessageForm extends React.Component {
       });
   };
 
+  handleKeyDown = () => {
+    const { message, typingRef, channel, user } = this.state;
+
+    if (message) {
+      typingRef
+        .child(channel.id)
+        .child(user.uid)
+        .set(user.displayName);
+    } else {
+      typingRef
+        .child(channel.id)
+        .child(user.uid)
+        .remove();
+    }
+  };
+
   render() {
     const {
       errors,
@@ -162,12 +183,13 @@ class MessageForm extends React.Component {
             icon={<Button icon={'send'} />}
             autoComplete="off"
             labelPosition="left"
-            placeholder="write your message"
+            placeholder="Write your message"
             onChange={this.handleChange}
             className={
               errors.some(err => err.message.includes('message')) ? 'error' : ''
             }
             value={message}
+            onKeyDown={this.handleKeyDown}
           />
         </Form>
         <Button.Group icon widths="2" style={{ marginTop: '5px' }}>

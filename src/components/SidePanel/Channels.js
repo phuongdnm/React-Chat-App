@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Icon, Modal, Form, Input, Button, Label } from 'semantic-ui-react';
+// prettier-ignore
+import { Menu, Icon, Modal, Form, Input, Button, Label} from 'semantic-ui-react';
 import firebase from '../../firebase';
 import { connect } from 'react-redux';
 import { setCurrentChannel, setPrivateChannel } from '../../actions';
@@ -16,7 +17,8 @@ class Channels extends React.Component {
     activeChannel: '',
     channel: null,
     messageRef: firebase.database().ref('messages'),
-    notifications: []
+    notifications: [],
+    typingRef: firebase.database().ref('typing')
   };
 
   componentDidMount() {
@@ -79,13 +81,13 @@ class Channels extends React.Component {
   getNotificationCount = channel => {
     let count = 0;
     this.state.notifications.forEach(notification => {
-      if (notification.id === channel.id){
+      if (notification.id === channel.id) {
         count = notification.count;
       }
-    })
-    
+    });
+
     if (count > 0) return count;
-  }
+  };
 
   removeListeners = () => {
     this.state.channelsRef.off();
@@ -96,7 +98,7 @@ class Channels extends React.Component {
     if (this.state.firstLoad && this.state.channels.length > 0) {
       this.props.setCurrentChannel(firstChannel);
       this.setActiveChannel(firstChannel);
-      this.setState({channel: firstChannel});
+      this.setState({ channel: firstChannel });
     }
     this.setState({ firstChannel: false });
   };
@@ -148,6 +150,10 @@ class Channels extends React.Component {
 
   changeChannel = channel => {
     this.setActiveChannel(channel);
+    this.state.typingRef
+      .child(this.state.channel.id)
+      .child(this.state.user.uid)
+      .remove();
     this.props.setCurrentChannel(channel);
     this.props.setPrivateChannel(false);
     this.setState({ channel });
