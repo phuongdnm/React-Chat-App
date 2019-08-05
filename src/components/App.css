@@ -20,11 +20,16 @@ body,
 
 /* MessageForm.js */
 .message__form {
-  position: fix !important;
-  bottom: 0em;
+  position: fixed !important;
+  bottom: 1em;
+  margin-left: 320px !important;
   left: 0;
   right: 1em;
   z-index: 200;
+}
+
+.emojipicker {
+  position: absolute;
 }
 
 /* Message.js */

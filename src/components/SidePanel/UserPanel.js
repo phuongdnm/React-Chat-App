@@ -1,6 +1,6 @@
 import React from 'react';
 // prettier-ignore
-import { Grid, Header, Icon, Dropdown, Image, Modal, Input, Button, Label } from 'semantic-ui-react';
+import { Grid, Header, Icon, Dropdown, Image, Modal, Input, Button } from 'semantic-ui-react';
 
 import firebase from '../../firebase';
 import AvatarEditor from 'react-avatar-editor';
