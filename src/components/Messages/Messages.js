@@ -37,6 +37,16 @@ class Messages extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.messagesEnd) {
+      this.scrollToBottom();
+    }
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
+  };
+
   componentWillUnmount() {
     this.removeListeners();
   }
@@ -236,7 +246,9 @@ class Messages extends React.Component {
             }}
             key={user.id}
           >
-            <span className="user__typing"><strong>{user.name}</strong> is typing</span>
+            <span className="user__typing">
+              <strong>{user.name}</strong> is typing
+            </span>
             <Typing />
           </div>
         );
@@ -266,6 +278,7 @@ class Messages extends React.Component {
               ? this.displayMessages(searchResults)
               : this.displayMessages(messages)}
             {this.displayTypingUsers(typingUsers)}
+            <div ref={node => (this.messagesEnd = node)} />
           </Comment.Group>
         </Segment>
 
