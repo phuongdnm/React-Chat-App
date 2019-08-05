@@ -23,6 +23,13 @@ class MessageForm extends React.Component {
     emojiPicker: false
   };
 
+  componentWillUnmount() {
+    if (this.state.uploadTask !== null) {
+      this.state.uploadTask.cancel();
+      this.setState({ uploadTask: null });
+    }
+  }
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -150,7 +157,7 @@ class MessageForm extends React.Component {
       });
   };
 
-  handleKeyDown = (event) => {
+  handleKeyDown = event => {
     if (event.keyCode === 13) {
       this.sendMessage();
     }
